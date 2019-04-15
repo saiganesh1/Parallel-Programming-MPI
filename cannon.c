@@ -1,6 +1,6 @@
 /*
 	Author : Sai Ganesh
-	Roll No: c167101;
+	Roll No: 167101;
 	BTECH CSE NIT WARANGAL 
 
 	Implementation of Cannon's Algorithm
