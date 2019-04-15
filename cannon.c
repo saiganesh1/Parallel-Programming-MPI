@@ -92,14 +92,12 @@ int main(int argc, char **argv)
 	/*Shift each row of matrix A by i steps to left (with wrapAround ) */
 	MPI_Cart_shift(comm_2d, 1, -mycoords[0], &shiftsource, &shiftdest);
 
-	MPI_Sendrecv_replace(a, nlocal*nlocal, MPI_DOUBLE, shiftdest,
-										1, shiftsource, 1, comm_2d, &status);
+	MPI_Sendrecv_replace(a, nlocal*nlocal, MPI_DOUBLE, shiftdest, 1, shiftsource, 1, comm_2d, &status);
 
 	/*shift each column of matrix B by j steps upward	(with wrapAround) */
 	MPI_Cart_shift(comm_2d, 0, -mycoords[1], &shiftsource, &shiftdest);
 
-	MPI_Sendrecv_replace(b, nlocal*nlocal, MPI_DOUBLE, shiftdest,
-										1, shiftsource, 1, comm_2d, &status);
+	MPI_Sendrecv_replace(b, nlocal*nlocal, MPI_DOUBLE, shiftdest, 1, shiftsource, 1, comm_2d, &status);
 
 	/*Get into Main Computation Loop */
 	for (int i = 0; i < dims[0]; ++i)
@@ -108,13 +106,11 @@ int main(int argc, char **argv)
       	matrixMultiply(nlocal,a,b,c);
 
     	/*Shift Matrix A left by one */
-		MPI_Sendrecv_replace(a, nlocal*nlocal, MPI_DOUBLE, leftrank,
-										1, rightrank, 1, comm_2d, &status);
+		MPI_Sendrecv_replace(a, nlocal*nlocal, MPI_DOUBLE, leftrank, 1, rightrank, 1, comm_2d, &status);
 
 		/*Shift Matrix B Upward by one */
 
-		MPI_Sendrecv_replace(b, nlocal*nlocal, MPI_DOUBLE, uprank, 
-										1, downrank, 1, comm_2d, &status);	
+		MPI_Sendrecv_replace(b, nlocal*nlocal, MPI_DOUBLE, uprank, 1, downrank, 1, comm_2d, &status);	
         
 	}
 
